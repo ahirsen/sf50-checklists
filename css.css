@@ -1,0 +1,799 @@
+/* =======================
+   General Styles
+   ======================= */
+   body {
+    font-family: 'Frutiger', sans-serif;
+    background-color: black;
+    color: white;
+    margin: 0;
+    padding: 0;
+    font-size: 16px; /* Base font size for consistency */
+    
+    /* Prevent text scaling */
+    -webkit-text-size-adjust: 100%;
+    text-size-adjust: 100%;
+    
+    /* Prevent scrolling if not needed */
+    overflow: hidden;
+}
+
+h2 {
+    color: #00ffff;
+    margin: 0;
+    padding-bottom: 10px;
+    font-size: 24px; /* Fixed font size */
+}
+
+/* =======================
+   Font Faces
+   ======================= */
+@font-face {
+    font-family: 'Frutiger';
+    src: url('fonts/Frutiger-Regular.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Frutiger';
+    src: url('fonts/Frutiger-Bold.ttf') format('truetype');
+    font-weight: bold;
+    font-style: normal;
+}
+
+/* =======================
+   "Go to Next Checklist?" Button Styles
+   ======================= */
+.go-next-checklist {
+    color: #00dfff; /* Fixed blue color */
+    background: none; /* Transparent background */
+    border: none; /* No border */
+    font-size: 18px; /* Adjust font size as needed */
+    cursor: pointer; /* Pointer cursor on hover */
+    font-family: 'Frutiger', sans-serif; /* Consistent font */
+    padding: 5px 8px; /* Adjusted padding */
+    position: absolute; /* Absolute positioning within checklist-display */
+    bottom: 10px; /* 10px from the bottom */
+    right: 10px; /* 10px from the right */
+    z-index: 1000; /* Ensure it stays above other elements */
+    transition: none; /* Remove color transition */
+    text-decoration: none; /* Remove underline */
+    touch-action: manipulation;
+}
+
+/* Remove any styles that change color on hover, focus, or active */
+.go-next-checklist:hover,
+.go-next-checklist:focus,
+.go-next-checklist:active {
+    color: #00dfff; /* Maintain the same blue color */
+    background: none; /* Ensure background remains unchanged */
+    outline: none; /* Remove outline */
+    text-decoration: none; /* Ensure no underline appears */
+}
+
+#go-next-checklist.selected-item {
+    border: 2px solid #00dfff;
+    /* Add other highlight styles here if desired */
+}
+
+/* =======================
+   Container and Layout
+   ======================= */
+
+/* Prevent Overlapping by Adding Bottom Padding to Checklist Display */
+.checklist-display {
+    display: flex;
+    flex-direction: column;
+    height: 720px; /* Fixed height */
+    border: 2px solid white;
+    padding: 10px;
+    background-color: black;
+    box-sizing: border-box;
+    font-size: 20px; /* Fixed font size */
+    overflow: hidden; /* Prevent scrolling of entire container */
+    position: relative; /* For positioning the button */
+    padding-bottom: 38px; /* Reduced space for the fixed button */
+}
+
+.container {
+    display: flex;
+    justify-content: space-between;
+    padding: 20px;
+    gap: 20px; /* Space between checklist and warning sections */
+    box-sizing: border-box;
+    
+    /* Ensure fixed layout */
+    width: 1270px; /* Combined width of checklist and warning sections plus gaps */
+    height: 860px; /* Adjust height as needed */
+    margin: 0 auto; /* Center the container */
+    position: relative;
+}
+
+/* Outer frames for each section */
+.outer-frame {
+    border: 4px solid #ffffff;
+    padding: 4px;
+    background-color: black;
+    box-sizing: border-box;
+    position: relative;
+}
+
+/* =======================
+   Checklist Section
+   ======================= */
+.checklist-section {
+    display: flex;
+    flex-direction: column;
+    width: 650px; /* Fixed width */
+    position: relative;
+}
+
+.checklist-title-box {
+    border: 2px solid white;
+    padding: 10px;
+    background-color: black;
+    height: 100px; /* Fixed height */
+    box-sizing: border-box;
+    margin-bottom: 4px;
+    position: relative;
+}
+
+#checklist-title {
+    color: #00ffff;
+    margin: 25px 10px 15px 10px; /* Added bottom margin */
+    font-size: 24px;
+}
+
+.checklist-type-label {
+    position: absolute;
+    top: 1px;
+    left: 1px;
+    padding: 0;
+    color: #00ffff;
+    font-size: 24px;
+    font-family: 'Arial', sans-serif;
+    font-weight: normal;
+    border: none;
+    background-color: transparent;
+}
+
+#checklist-description {
+    font-size: 22px; /* Retain existing styles */
+    line-height: 1.5; /* Retain existing styles */
+    margin-top: 0px;    /* Adjust as needed */
+    margin-bottom: 10px; /* Adjust as needed */
+}
+
+#checklist-steps {
+    list-style-type: none;
+    padding-left: 0;
+    margin: 0;
+}
+
+/* Step items for checklists */
+.step-item {
+    display: flex;
+    flex-wrap: wrap; /* Allow items to wrap to the next line */
+    align-items: flex-start; /* Maintain original alignment */
+    padding: 3px 0;
+    margin-bottom: 0px;
+    line-height: 1.5;
+    max-width: 100%;
+    box-sizing: border-box;
+    
+    /* Prevent text selection */
+    -webkit-user-select: none;
+    user-select: none;
+    
+    /* Prevent touch callout */
+    -webkit-touch-callout: none;
+}
+
+
+/* Fixed sizes for step texts */
+.step-label {
+    min-width: 0;
+    flex-shrink: 0;
+    margin-right: 5px;
+    font-size: 18px;
+    word-break: break-word;
+    align-items: center;
+    max-width: 100%;
+    color: white;
+}
+
+.dots {
+    flex-grow: 1; /* Allow dots to fill the available space */
+    margin: 0 10px; /* Space between step text and action text */
+    position: relative; /* Positioning context for pseudo-element */
+}
+
+.dots::before {
+    content: '';
+    position: absolute;
+    bottom: -20px; /* Slight upward adjustment */
+    left: 0;
+    right: 0;
+    border-bottom: 3px dotted white; /* Thicker dotted line */
+    
+    /* Enhanced Dot Size and Spacing */
+    background-image: radial-gradient(circle, white 0px, transparent 0px);
+    background-size: 6px 6px; /* Increased size and spacing of dots */
+
+    /* Adjust the transform as needed */
+    transform: translateY(-30%); /* Adjust the percentage to align properly */
+}
+
+/* Change dots color to green when the parent step-item is checked */
+.step-item.checked .dots::before {
+    border-bottom-color: #3cb62e; /* Green color for dots */
+    background-image: radial-gradient(circle, #3cb62e 0px, transparent 0px); /* Update dots color if using background-image */
+}
+
+.action-text {
+    /* Push the action-text to the right */
+    margin-left: auto;
+    
+    /* Ensure text within .action-text aligns to the right */
+    text-align: right;
+    
+    /* Allow the action-text to take up necessary width */
+    white-space: normal; /* Allows wrapping */
+    
+    /* Optional: Specify a maximum width to control wrapping */
+    max-width: 200px; /* Adjust as needed */
+}
+
+/* =======================
+   Indentation for Sub-Steps
+   ======================= */
+
+.special-symbol {
+    color: white;
+    margin-right: 5px;
+    font-size: 1.2em; /* Increased size for symbols */
+}
+
+.special-text {
+    color: white;
+    font-size: 22px;
+    padding: 10px 0px;/* Top & Bottom: 5px, Left & Right: 10px */
+    display: inline-block; /* Allows padding to apply correctly */
+}
+
+.note-item {
+    color: #ffffff;
+}
+
+.procedure-complete {
+    color: white;
+    text-align: left;
+    font-weight: bold;
+    padding: 20px 0;
+}
+
+#checklist-group-name {
+    margin-bottom: 20px; /* Adjust the value as needed */
+} 
+
+/* =======================
+   Warning Section
+   ======================= */
+
+   .hidden-container {
+    height: 820px;
+    width: 652px;
+    border: 0px solid white;
+    position: relative; /* Make this container a positioning context */
+    overflow: hidden; /* If needed, hides elements that overflow the container */
+}
+   
+.warning-section {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 602px; /* Fixed width */
+    height: 550px; /* Fixed height */
+    position: relative;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Checklist Items Title */
+.checklist-items-title {
+    text-align: center;
+    font-size: 22px;
+    margin: 0;
+    padding: 5px;
+    color: #00ffff; /* Match title color */
+}
+
+/* Checklist Items Container */
+.checklist-items-container {
+    border: 2px solid white; /* White border around the container */
+    padding: 0; /* No extra padding */
+    margin: 0 auto; /* Center the container */
+    width: 370px; /* Fixed width to contain the checklist items */
+    height: 440px; /* Fixed height to show 5 items */
+    overflow-y: auto; /* Enable scrolling */
+    box-sizing: border-box;
+    scroll-snap-type: y mandatory; /* Enable vertical snapping */
+    scroll-behavior: smooth; /* Smooth scrolling behavior */
+}
+
+/* Warning List */
+.warning-list {
+    padding: 0;
+    margin: 0;
+    overflow: hidden; /* Prevent overflow beyond border */
+}
+
+.warning-list h2 {
+    text-align: center;
+    font-size: 24px;
+    margin-bottom: 5px;
+    color: #00ffff; /* Match title color */
+}
+
+#warning-items {
+    margin: 0; /* Remove top and left margin */
+    padding: 0; /* Remove padding */
+    list-style-type: none; /* Ensure no default list styles */
+}
+
+/* Apply box-sizing globally for consistency */
+*, *::before, *::after {
+    box-sizing: border-box;
+}
+
+/* Checklist List Container */
+.checklist-list-container {
+    max-height: 400px; /* Adjust based on your design needs */
+    overflow-y: auto;  /* Enable vertical scrolling */
+    padding-right: 10px; /* Optional: Prevent content from hiding behind scrollbar */
+    box-sizing: border-box;
+}
+
+/* Checklist Items - Default State */
+.warning-item {
+    box-sizing: border-box; /* Ensure padding and border are included in height */
+    padding: 0px;
+    background-color: black;
+    margin: 1px 0;
+    cursor: pointer;
+    border: 2px solid #ffffff;
+    text-align: center;
+    color: white;
+    font-size: 18px; /* Fixed font size */
+    height: 86px; /* Fixed height */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%; /* Adjusted to 100% since box-sizing is border-box */
+    border-left: 4px solid transparent; /* Preallocate border space */
+    padding-left: 8px; /* Space between border and text */
+    transition: background-color 0.3s, border-left-color 0.3s; /* Smooth transitions */
+}
+
+/* Selected Checklist Item */
+.warning-item.selected-item {
+    background-color: #0077aa; /* Light blue background */
+    border-left-color: #007bff; /* Blue left border */
+    /* No changes to padding or height */
+    cursor: pointer; /* Change cursor to pointer on hover */
+}
+
+/* =======================
+   Buttons
+   ======================= */
+/* Buttons Container */
+.buttons-container {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    padding: 10px 0;
+    box-sizing: border-box;
+}
+
+/* Button Stacks */
+.button-stack-left,
+.button-stack-right {
+    display: flex;
+    flex-direction: column;
+    margin: 20px 0; /* Spacing between button stacks */
+    position: absolute; /* Absolute positioning */
+    top: 32px; /* Adjusted value to move buttons down */
+}
+
+.button-stack-left {
+    left: 10px; /* Position left stack */
+}
+
+.button-stack-right {
+    right: 10px; /* Position right stack */
+    height: 440px; /* Match the checklist-items-container height */
+}
+
+/* Buttons */
+.button-left,
+.button-right {
+    background-color: #45cdff; /* Original background color */
+    color: black; /* Original text color */
+    width: 100px; /* Fixed width */
+    height: 84px; /* Fixed height */
+    border: none;
+    text-align: center;
+    font-size: 18px; /* Fixed font size */
+    cursor: pointer;
+    border-radius: 5px;
+    margin: 3px 0; /* Consistent margin */
+    padding: 5px; /* Padding inside buttons */
+    transition: background-color 0.3s ease, color 0.3s ease, border 0.3s ease; /* Smooth transitions */
+    
+    /* Prevent touch interactions that could cause zooming */
+    touch-action: manipulation;
+    
+    /* Prevent text selection and touch callout */
+    -webkit-user-select: none;
+    user-select: none;
+    -webkit-touch-callout: none;
+}
+
+/* Selected Button Styles */
+.button-left.selected,
+.button-right.selected {
+    background-color: #c6f8ff; /* Light blue background */
+    border: 0px solid #45cdff; /* Blue border for emphasis */
+    color: black;
+}
+
+.button-right.checklist-options {
+    background-color: black;
+    color: white;
+    border: 2px solid white;
+    margin-top: auto; /* Pushes the button to the bottom */
+    transform: translateY(10px); /* Moves the button down by 10px */
+}
+
+/* =======================
+   Select Button
+   ======================= */
+/* Select Button */
+.select-button {
+    background-color: #45cdff;
+    color: black;
+    width: 115px; /* Fixed width */
+    height: 115px; /* Fixed height */
+    border: none;
+    text-align: center;
+    font-size: 18px; /* Fixed font size */
+    cursor: pointer;
+    border-radius: 5px;
+    position: absolute;
+    bottom: 0px;
+    right: 0px;
+    z-index: 1000;
+    
+    /* Prevents certain touch gestures */
+    touch-action: manipulation;
+    
+    /* Prevent font scaling */
+    -webkit-text-size-adjust: 100%;
+    text-size-adjust: 100%;
+    
+    /* Prevent text selection and touch callout */
+    -webkit-user-select: none;
+    user-select: none;
+    -webkit-touch-callout: none;
+    
+    /* Ensure no CSS transforms are applied */
+    transform: none;
+    
+    /* Smooth transition */
+    transition: background-color 0.3s ease, color 0.3s ease, border 0.3s ease;
+}
+
+.arrow-buttons-container {
+    position: absolute;
+    bottom: 0px;
+    right: 60px; /* same right as select button for alignment */
+    display: flex;
+    flex-direction: column;
+    /* We'll shift it left by half the select button's width to place it next to select */
+    transform: translateX(-60px); /* about 58px, adjust as needed */
+}
+
+.arrow-button {
+    width: 58px;
+    height: 56px;
+    background-color: #45cdff;
+    border: none;
+    border-radius: 5px;
+    margin: 1px 0; /* small gap */
+    font-size: 24px;
+    font-weight: bold;
+    color: black;
+    cursor: pointer;
+}
+
+/* Highlighted selected item styling remains the same */
+.selected-item {
+    border: 2px solid #00dfff;
+}
+
+.select-button,
+.arrow-button,
+#go-next-checklist,
+#random-issue-button,
+#clear-cass-button,
+#memory-items-button {
+    -webkit-user-select: none;
+    user-select: none;
+    -webkit-touch-callout: none;
+    touch-action: manipulation; /* Helps prevent double-tap zoom on iOS */
+}
+
+
+/* =======================
+   Selected Item Styling
+   ======================= */
+   .selected-item {
+    border: 2px solid #00dfff; /* Blue border to highlight selection */
+    border-radius: 2px; /* Slightly rounded corners for aesthetics */
+    padding: 2px; /* Optional: Adds a small padding inside the border */
+}
+
+/* =======================
+   Checkbox Styling
+   ======================= */
+/* Remove default checkbox appearance */
+input[type="checkbox"] {
+    appearance: none; /* Remove default styling */
+    background-color: black;
+    border: 2px solid white;
+    border-radius: 3px;
+    display: inline-block;
+    vertical-align: middle;
+    cursor: pointer;
+    margin-right: 10px; /* Spacing after checkbox */
+    
+    /* Fixed size */
+    width: 16px;
+    height: 16px;
+    
+    /* Prevent touch interactions that could cause zooming */
+    touch-action: manipulation;
+    
+    /* Prevent text selection and touch callout */
+    -webkit-user-select: none;
+    user-select: none;
+    -webkit-touch-callout: none;
+}
+
+input[type="checkbox"]:checked {
+    background-color: black;
+    border: 2px solid #3cb62e; /* Green border */
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath fill='%233cb62e' d='M13.6 4.5l-7.1 7.1c-.1.1-.2.2-.4.2s-.3-.1-.4-.2L2.4 8.9c-.2-.2-.2-.5 0-.7s.5-.2.7 0l2.6 2.6 6.8-6.8c.2-.2.5-.2.7 0s.2.6 0 .8z'/%3E%3C/svg%3E");
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: 20px; /* Size of the checkmark */
+}
+
+/* Style for checked step items */
+.step-item.checked .step-label,
+.step-item.checked .action-text {
+    color: #3cb62e; /* Green color for checked text */
+}
+
+/* =======================
+   Accessibility Focus Styles
+   ======================= */
+.button-left:focus,
+.button-right:focus,
+.select-button:focus {
+    outline: 3px solid #45cdff; /* Blue outline for focus */
+}
+
+.scrollable-content {
+    flex: 1; /* Takes up remaining space */
+    overflow-y: auto; /* Enable vertical scrolling */
+    padding-bottom: 0px; /* Increased space to prevent overlap */
+}
+
+.step-label, .action-text {
+    color: inherit; /* Ensure these elements inherit color from the parent */
+    font-size: 18px;
+    word-wrap: break-word;
+    max-width: 100%;
+}
+
+/* Styles for sub-steps */
+.sub-step {
+    margin-left: 25px; /* Indent sub-steps */
+}
+
+/* Style for checked items */
+.step-item.checked {
+    color: #3cb62e; /* Green color for checked steps */
+}
+
+/* Optional: Remove blue focus outline for checkboxes */
+input[type="checkbox"]:focus {
+    outline: none;
+}
+
+
+
+/* Random Issue Button */
+.random-issue-button {
+    background-color: #45cdff;
+    color: black;
+    width: 115px;
+    height: 56px; /* Slightly more than half of 115px */
+    border: none;
+    text-align: center;
+    font-size: 18px;
+    cursor: pointer;
+    border-radius: 5px;
+    position: absolute;
+    bottom: 59px; /* 20px (clear button space) + 57px (clear button height) = 77px */
+    right: 485px;
+    z-index: 1000;
+    touch-action: manipulation;
+    -webkit-text-size-adjust: 100%;
+    text-size-adjust: 100%;
+    -webkit-user-select: none;
+    user-select: none;
+    -webkit-touch-callout: none;
+    transform: none;
+    transition: background-color 0.3s ease, color 0.3s ease, border 0.3s ease;
+}
+
+/* Clear Button */
+.clear-cass-button {
+    background-color: #45cdff;
+    color: black;
+    width: 115px;
+    height: 56px; /* Slightly less than half of 115px */
+    border: none;
+    text-align: center;
+    font-size: 18px;
+    cursor: pointer;
+    border-radius: 5px;
+    position: absolute;
+    bottom: 0px; /* Placed at bottom, Random Issue button stacked above it */
+    right: 485px;
+    z-index: 1000;
+    touch-action: manipulation;
+    -webkit-text-size-adjust: 100%;
+    text-size-adjust: 100%;
+    -webkit-user-select: none;
+    user-select: none;
+    -webkit-touch-callout: none;
+    transform: none;
+    transition: background-color 0.3s ease, color 0.3s ease, border 0.3s ease;
+}
+
+/* Memory Items Button */
+.memory-items-button {
+    background-color: #45cdff;
+    color: black;
+    width: 115px;
+    height: 115px;
+    border: none;
+    text-align: center;
+    font-size: 18px;
+    cursor: pointer;
+    border-radius: 5px;
+    position: absolute;
+    right: 365px;
+    bottom: 0px;
+    z-index: 1000;
+    touch-action: manipulation;
+    -webkit-text-size-adjust: 100%;
+    text-size-adjust: 100%;
+    -webkit-user-select: none;
+    user-select: none;
+    -webkit-touch-callout: none;
+    transform: none;
+    transition: background-color 0.3s ease, color 0.3s ease, border 0.3s ease;
+}
+
+
+
+
+/* Memory item highlight style */
+.memory-item-highlight {
+    background-color: gray; 
+    color: white; /* For contrast */
+}
+
+
+
+
+/* Cass Message */
+.cass-message {
+    position: absolute;
+    bottom: 185px;
+    right: 75px; /* Approximate center */
+    width: 460px;
+    text-align: center;
+    padding: 0px 10px;
+    font-size: 20px;
+    font-weight: bold;
+    border: 2px solid white;
+    border-radius: 0px;
+    display: none;
+}
+
+.cass-message p {
+    margin: 0;          /* Remove default margins */
+    padding: 5px 0;     /* Minimal vertical padding inside paragraph */
+    line-height: 1;     /* Keep line-height tight for minimal spacing */
+}
+
+/* Placeholder styles for each type */
+/* Issue: white outline, black background, white text */
+.cass-issue {
+    border-color: white;
+    background-color: red;
+    color: white;
+}
+
+/* Warning: red box & background, white text */
+.cass-warning {
+    border-color: white;
+    background-color: black;
+    color: red;
+}
+
+/* Caution: yellow box & background, black text */
+.cass-caution {
+    border-color: white;
+    background-color: black;
+    color: yellow;
+}
+
+/* Advisory (just choose a placeholder color, e.g., blue):
+   blue background, white text */
+.cass-advisory {
+    border-color: white;
+    background-color: black;
+    color: white;
+}
+/* =======================
+   Read-aloud button
+   ======================= */
+.speak-button {
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    width: 52px;
+    height: 52px;
+    font-size: 26px;
+    line-height: 1;
+    background-color: #000;
+    color: #00ffff;
+    border: 2px solid #00ffff;
+    border-radius: 8px;
+    cursor: pointer;
+    -webkit-tap-highlight-color: transparent;
+}
+.speak-button.on {
+    background-color: #00ffff;
+    color: #000;
+}
+
+/* =======================
+   Fit-to-screen (iPad / iPhone)
+   The layout is drawn at a fixed 1270 x 860; fit.js scales it to the screen.
+   ======================= */
+html, body {
+    overflow: hidden;
+    height: 100%;
+    overscroll-behavior: none;
+}
+.container {
+    transform-origin: top left;
+    margin: 0;
+}

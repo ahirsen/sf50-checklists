@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <!-- Viewport meta to prevent zooming on iOS -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>SF50 Checklists</title>
+    <meta name="theme-color" content="#000000">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="apple-mobile-web-app-title" content="SF50 Checklists">
+    <link rel="manifest" href="manifest.json">
+    <link rel="apple-touch-icon" href="icons/icon-180.png">
+    <link rel="icon" type="image/png" href="icons/icon-192.png">
+    <link rel="stylesheet" href="css.css">
+</head>
+<body>
+    <div class="container">
+        <div class="checklist-section outer-frame">
+            <div class="checklist-title-box">
+                <h2 id="checklist-title">Checklist Title</h2>
+                <div id="checklist-type" class="checklist-type-label">Type Label</div>
+                <button id="speak-button" class="speak-button" aria-pressed="false" aria-label="Read checklist aloud" title="Read aloud">&#128264;</button>
+            </div>
+            <div class="checklist-display" id="checklist-container">
+                <div class="scrollable-content">
+                    <p id="checklist-description">Checklist Description</p>
+                    <ul id="checklist-steps">
+                        <li class="step-item">
+                            <input type="checkbox" id="step-0-1">
+                            <div class="step-content">
+                                <label for="step-0-1" class="step-label">1. Oxygen Mask</label>
+                                <span class="dots"></span>
+                                <span class="action-text">
+                                    ENSURE PASSENGERS ARE RECEIVING OXYGEN<br>
+                                    RECHECK SYSTEMS
+                                </span>
+                                <span class="special-text">Special Text</span>
+                            </div>
+                        </li>
+                        <li class="step-item">
+                            <input type="checkbox" id="step-0-2">
+                            <div class="step-content">
+                                <label for="step-0-2" class="step-label">
+                                    Checklist item with <span class="special-text">Special Text</span> requiring more padding.
+                                </label>
+                                <span class="dots"></span>
+                                <span class="action-text">
+                                    REVIEW AND APPROVE<br>
+                                    CONFIRM STATUS
+                                </span>
+                            </div>
+                        </li>
+                        <li class="step-item">
+                            <input type="checkbox" id="step-0-5-a">
+                            <div class="step-content">
+                                <label for="step-0-5-a" class="step-label sub-step">a. Thrust Lever</label>
+                                <span class="dots"></span>
+                                <span class="action-text">
+                                    REDUCE<br>
+                                    MONITOR PERFORMANCE
+                                </span>
+                            </div>
+                        </li>
+                        <!-- Additional steps as needed -->
+                    </ul>
+
+                    <div id="checklist-cautions" class="cautions-section"></div>
+                    <div id="checklist-notes">
+                        <p class="note-item">Note: Important information here.</p>
+                    </div>
+                </div>
+                <button id="go-next-checklist" class="go-next-checklist">Go to Next Checklist?</button>
+            </div>
+        </div>
+
+        <!-- New hidden container wrapping warning section and bottom buttons -->
+        <div class="hidden-container">
+            <div class="warning-section outer-frame">
+                <div class="buttons-container">
+                    <div class="button-stack-left">
+                        <button class="button-left" data-type="emergency">Emergency</button>
+                        <button class="button-left" data-type="warning">Warning</button>
+                        <button class="button-left" data-type="abnormal procedures">Abnormal Procedures</button>
+                        <button class="button-left" data-type="caution a-f">Caution<br>(A-F)</button>
+                        <button class="button-left" data-type="caution g-z">Caution<br>(G-Z)</button>
+                    </div>
+                    <div class="button-stack-right">
+                        <button class="button-right" data-type="advisory">Advisory</button>
+                        <button class="button-right" data-type="normal">Normal</button>
+                        <button class="button-right checklist-options" data-type="checklist options">Checklist Options</button>
+                    </div>
+                </div>
+                <h2 class="checklist-items-title">Checklist</h2>
+                <div class="checklist-items-container">
+                    <ul id="warning-items">
+                        <li class="warning-item">Checklist 1</li>
+                        <li class="warning-item">Checklist 2</li>
+                        <!-- More checklist items -->
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Bottom area inside hidden container -->
+            <div class="bottom-bar">
+                <button id="random-issue-button" class="random-issue-button">Random Issue</button>
+                <button id="clear-cass-button" class="clear-cass-button">Clear</button>
+                <button id="memory-items-button" class="memory-items-button">Memory Items</button>
+                <div class="cass-message" id="cass-message" style="display:none;">
+                    <p id="cass-text">CASS MESSAGE TEXT HERE</p>
+                </div>
+                <button id="select-button" class="select-button">Select</button>
+            </div>
+
+            <div class="arrow-buttons-container">
+                <button id="up-button" class="arrow-button">&#9650;</button>
+                <button id="down-button" class="arrow-button">&#9660;</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="js.js"></script>
+    <script src="fit.js"></script>
+    <script src="speech.js"></script>
+    <script>
+      if ('serviceWorker' in navigator) {
+        window.addEventListener('load', () => navigator.serviceWorker.register('sw.js'));
+      }
+    </script>
+</body>
+</html>
